@@ -1,4 +1,4 @@
-# 2x RTX 2080Ti NVL-bridge Qwen3.6-27B 78.5t/s on avg
+# 2x RTX 2080Ti NVL-bridge Qwen3.6-27B 78.5t/s on avg (146W powerlimit on each card)
 
 1. git clone https://github.com/snapo/2-x-RTX-2080-Qwen3.6-27B-75.5t-s-avg.git
 2. cd 2-x-RTX-2080-Qwen3.6-27B-75.5t-s-avg
