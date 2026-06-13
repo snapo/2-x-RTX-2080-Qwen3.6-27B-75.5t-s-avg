@@ -4,8 +4,9 @@
 2. cd 2-x-RTX-2080-Qwen3.6-27B-75.5t-s-avg
 3. now edit first the .env file and fill it with the hugginngface token and a api key you decide to use when connecting to your vllm instance
 4. open the docker compose file and change the max memory use at the bottom and change in the upper section the port 16384 to a port you like to connect to.
-5. Ensure all your coding frameworks are set to 64k context (64k context + 32k output == the ~100k context configured)
-6. after you did that, use "docker compose up" (if you like to let it run in the background permanently "docker compose up -d")
+5. after you did edit it, do a "docker compose up --build"
+6. Ensure all your coding frameworks are set to 64k context (64k context + 32k output == the ~100k context configured)
+7. after you did that, use "docker compose up" (if you like to let it run in the background permanently "docker compose up -d")
 
 
 Now you have a fully working Qwen3.6 27B model that is extremely fast, and you can use 4 concurrent coding sessions (for example use at the same time 1 opencode session, 1 hermes session, 2 opencode sessions) without one of them influencing another.
