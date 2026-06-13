@@ -1,0 +1,55 @@
+services:
+  vllm-server:
+    build:
+      context: .
+      dockerfile: vllm.Dockerfile
+    container_name: vllm-server
+    shm_size: 4096mb
+    restart: unless-stopped
+    runtime: nvidia
+    ipc: host
+    ports:
+      - "16384:8000"
+    volumes:
+      - ./hf-cache:/home/vllmuser/.cache/huggingface
+      - ./config:/home/vllmuser/config
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NCCL_P2P_DISABLE=0
+      - NCCL_P2P_LEVEL=NVL
+      - NCCL_CUMEM_ENABLE=0
+      - HOME=/home/vllmuser
+      - HF_TOKEN=${HF_TOKEN}
+    user: "1000:1000"
+    command: >
+      --model Lorbus/Qwen3.6-27B-int4-AutoRound
+      --chat-template /home/vllmuser/config/qwen3.6-enhanced-v2.jinja
+      --served-model-name "Qwen3.6 27B"
+      --api-key ${VLLM_API_KEY}
+      --quantization auto_round
+      --dtype float16
+      --tensor-parallel-size 2
+      --gpu-memory-utilization 0.85
+      --max-model-len 100000
+      --max-num-seqs 4
+      --max-num-batched-tokens 8192
+      --kv-cache-dtype fp8_e5m2
+      --enable-chunked-prefill
+      --enable-prefix-caching
+      --speculative-config '{"method":"mtp","num_speculative_tokens":3}'
+      --override-generation-config '{"temperature":0.6,"top_p":0.95,"top_k":20,"min_p":0.0,"presence_penalty":0.0,"repetition_penalty":1.0}'
+      --enable-auto-tool-choice
+      --tool-call-parser qwen3_coder
+      --reasoning-parser qwen3
+      --trust-remote-code
+      --default-chat-template-kwargs '{"enable_thinking": true}'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+        limits:
+          cpus: '12'
+          memory: 16G
