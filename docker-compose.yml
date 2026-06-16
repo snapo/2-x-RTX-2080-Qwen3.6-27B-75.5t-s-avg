@@ -29,8 +29,8 @@ services:
       --quantization auto_round
       --dtype float16
       --tensor-parallel-size 2
-      --gpu-memory-utilization 0.85
-      --max-model-len 100000
+      --gpu-memory-utilization 0.90
+      --max-model-len 131072
       --max-num-seqs 4
       --max-num-batched-tokens 8192
       --kv-cache-dtype fp8_e5m2
