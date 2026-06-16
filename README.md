@@ -5,7 +5,7 @@
 3. now edit first the .env file and fill it with the hugginngface token and a api key you decide to use when connecting to your vllm instance
 4. open the docker compose file and change the max memory use at the bottom and change in the upper section the port 16384 to a port you like to connect to.
 5. after you did edit it, do a "docker compose up --build"
-6. Ensure all your coding frameworks are set to 64k context (64k context + 32k output == the ~100k context configured)
+6. Ensure all your coding frameworks are set to 64k context (64k context + 64k output == the ~132k context configured)
 7. after you did that, use "docker compose up" (if you like to let it run in the background permanently "docker compose up -d")
 
 
